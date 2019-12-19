@@ -1,31 +1,33 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
-import {MdDone, MdDelete} from 'react-icons/md';
+import styled, { css } from 'styled-components';
+import { MdDone, MdDelete } from 'react-icons/md';
+import { useTodoDispatch } from '../TodoContext';
 
 const Remove = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#dee2e6;
-    font-size:24px;
-    cursor:pointer;
-    &:hover{color:#ff6b6b;}
-    display:none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dee2e6;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+  &:hover {
+    color: #ff6b6b;
+  }
 `;
 
-// Component Selector
-// TodoItemBlock 위에 커서가 있을 때, Remove 컴포넌트를 보여주라는 의미
 const TodoItemBlock = styled.div`
-    display:flex;
-    align-items:center;
-    padding-top:12px;
-    padding-bottom:12px;
-    &:hover{
-        $(Remove){
-            display:initial;
-        }
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  &:hover {
+    ${Remove} {
+      opacity: 1;
     }
+  }
 `;
+
 const CheckCircle = styled.div`
   width: 32px;
   height: 32px;
@@ -56,16 +58,21 @@ const Text = styled.div`
     `}
 `;
 
-function TodoItem({id,done,text}){
-    return(
-        <TodoItemBlock>
-            <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
-            <Text done={done}>{text}</Text>
-            <Remove>
-                <MdDelete />
-            </Remove>
-        </TodoItemBlock>
-    );
+function TodoItem({ id, done, text }) {
+  const dispatch = useTodoDispatch();
+  const onToggle = () => dispatch({ type: 'TOGGLE', id });
+  const onRemove = () => dispatch({ type: 'REMOVE', id });
+  return (
+    <TodoItemBlock>
+      <CheckCircle done={done} onClick={onToggle}>
+        {done && <MdDone />}
+      </CheckCircle>
+      <Text done={done}>{text}</Text>
+      <Remove onClick={onRemove}>
+        <MdDelete />
+      </Remove>
+    </TodoItemBlock>
+  );
 }
 
 export default TodoItem;
