@@ -1,15 +1,16 @@
 import React, { useReducer, createContext, useContext, useRef } from 'react';
 
+/*할 일 추가*/
 const initialTodos = [
   {
     id: 1,
     text: '프로젝트 생성하기',
-    done: true
+    done: false
   },
   {
     id: 2,
     text: '컴포넌트 스타일링하기',
-    done: true
+    done: false
   },
   {
     id: 3,
@@ -19,6 +20,11 @@ const initialTodos = [
   {
     id: 4,
     text: '기능 구현하기',
+    done: false
+  },
+  {
+    id: 5,
+    text: '성능 업데이트',
     done: false
   }
 ];
